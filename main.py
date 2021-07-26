@@ -1,29 +1,26 @@
-from tkinter import *
-from PIL import ImageTk, Image
+import tkinter
+from PIL import Image, ImageTk
 
-image_path = "images/2.jpg"
+def showPIL(pilImage):
+    root = tkinter.Tk()
+    w, h = root.winfo_screenwidth(), root.winfo_screenheight()
+    root.overrideredirect(1)
+    root.geometry("%dx%d+0+0" % (w, h))
+    root.focus_set()
+    root.bind("<Escape>", lambda e: (e.widget.withdraw(), e.widget.quit()))
+    canvas = tkinter.Canvas(root,width=w,height=h)
+    canvas.pack()
+    canvas.configure(background='black')
+    root.attributes('-fullscreen', True)
+    imgWidth, imgHeight = pilImage.size
+    if imgWidth > w or imgHeight > h:
+        ratio = min(w/imgWidth, h/imgHeight)
+        imgWidth = int(imgWidth*ratio)
+        imgHeight = int(imgHeight*ratio)
+        pilImage = pilImage.resize((imgWidth,imgHeight), Image.ANTIALIAS)
+    image = ImageTk.PhotoImage(pilImage)
+    imagesprite = canvas.create_image(w/2,h/2,image=image)
+    root.mainloop()
 
-root = Tk()
-root.title("Dynamically resize background Image")
-# open image file
-bg = ImageTk.PhotoImage(file=image_path)
-# create canvas
-canvas = Canvas(root, width=500, height=500)
-canvas.pack(fill=BOTH, expand=True)
-# place the image inside canvas
-canvas.create_image(0, 0, image=bg, anchor='nw')
-# resize function for resizing the image
-# with proper width and height of root window
-def resize_bg(event):
-    global bgg, resized, bg2
-    # open image to resize it
-    bgg = Image.open(image_path)
-    # resize the image with width and height of root
-    resized = bgg.resize((event.width, event.height),
-                         Image.ANTIALIAS)
-
-    bg2 = ImageTk.PhotoImage(resized)
-    canvas.create_image(0, 0, image=bg2, anchor='nw')
-# bind resized function with root window
-root.bind("<Configure>", resize_bg)
-root.mainloop()
+pilImage = Image.open("images/1.jpg")
+showPIL(pilImage)
