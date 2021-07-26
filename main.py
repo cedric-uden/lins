@@ -1,26 +1,46 @@
-import tkinter
-from PIL import Image, ImageTk
+import tkinter as tk
+from PIL import ImageTk
 
-def showPIL(pilImage):
-    root = tkinter.Tk()
-    w, h = root.winfo_screenwidth(), root.winfo_screenheight()
-    root.overrideredirect(1)
-    root.geometry("%dx%d+0+0" % (w, h))
-    root.focus_set()
-    root.bind("<Escape>", lambda e: (e.widget.withdraw(), e.widget.quit()))
-    canvas = tkinter.Canvas(root,width=w,height=h)
-    canvas.pack()
-    canvas.configure(background='black')
-    root.attributes('-fullscreen', True)
-    imgWidth, imgHeight = pilImage.size
-    if imgWidth > w or imgHeight > h:
-        ratio = min(w/imgWidth, h/imgHeight)
-        imgWidth = int(imgWidth*ratio)
-        imgHeight = int(imgHeight*ratio)
-        pilImage = pilImage.resize((imgWidth,imgHeight), Image.ANTIALIAS)
-    image = ImageTk.PhotoImage(pilImage)
-    imagesprite = canvas.create_image(w/2,h/2,image=image)
-    root.mainloop()
 
-pilImage = Image.open("images/1.jpg")
-showPIL(pilImage)
+# --- functions ---
+
+def on_click():
+    global current_image_number
+
+    # next image
+    current_image_number += 1
+
+    # return to first image
+    if current_image_number == len(images):
+        current_image_number = 0
+
+    # the same using modulo `%`
+    # current_image_number = (current_image_number+1) % len(images)
+
+    # change image on canvas
+    canvas.itemconfig(image_id, image=images[current_image_number])
+
+
+# --- main ---
+
+root = tk.Tk()
+
+# canvas for image
+canvas = tk.Canvas(root, width=60, height=60)
+canvas.pack()
+
+# button to change image
+button = tk.Button(root, text="Change", command=on_click)
+button.pack()
+
+# images
+images = [
+    ImageTk.PhotoImage(file="images/1.jpg"),
+    ImageTk.PhotoImage(file="images/2.jpg")
+]
+current_image_number = 0
+
+# set first image on canvas
+image_id = canvas.create_image(0, 0, anchor='nw', image=images[current_image_number])
+
+root.mainloop()
