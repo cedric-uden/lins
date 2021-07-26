@@ -3,9 +3,10 @@ from PIL import Image,ImageTk
 
 root = tk.Tk()
 root.title("display image")
-im=Image.open("images/1.jpg")  #This is the correct location and spelling for my image location
+im=Image.open("images/2.jpg")
 photo=ImageTk.PhotoImage(im)
 cv = tk.Canvas()
-cv.pack(side='top', fill='both', expand='yes')
-cv.create_image(10, 10, image=photo, anchor='nw')
+root.attributes('-fullscreen', True)
+cv.pack(side='top', fill='both', expand=True)
+cv.create_image(0, 0, image=photo, anchor='nw')
 root.mainloop()
