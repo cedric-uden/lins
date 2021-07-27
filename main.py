@@ -1,28 +1,24 @@
 import tkinter as tk
 from PIL import ImageTk
+import threading as th
 
 
 # --- functions ---
-
 def on_click():
+    load_image()
+    t = th.Timer(5.0, load_image)
+    t.start()
+
+
+def load_image():
     global current_image_number
 
-    # next image
-    current_image_number += 1
-
-    # return to first image
-    if current_image_number == len(images):
-        current_image_number = 0
-
-    # the same using modulo `%`
-    # current_image_number = (current_image_number+1) % len(images)
-
+    current_image_number = (current_image_number+1) % len(images)
     # change image on canvas
     canvas.itemconfig(image_id, image=images[current_image_number])
 
 
 # --- main ---
-
 root = tk.Tk()
 
 # canvas for image
