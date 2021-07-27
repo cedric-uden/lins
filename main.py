@@ -1,3 +1,4 @@
+import _tkinter
 import time
 import tkinter as tk
 from PIL import ImageTk
@@ -29,6 +30,14 @@ current_image_number = 0
 # set first image on canvas
 image_id = canvas.create_image(0, 0, anchor='nw', image=images[current_image_number])
 
+ts = time.time()
 while True:
-    load_image(root)
-    time.sleep(3)
+    if time.time() - ts > 3:
+        load_image(root)
+        ts = time.time()
+
+    try:
+        root.update()
+    except _tkinter.TclError:
+        print("Window has been closed.")
+        break
