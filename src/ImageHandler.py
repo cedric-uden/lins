@@ -34,24 +34,25 @@ class ImageHandler:
                 if filename[-len(self.image_extension):] == self.image_extension:
                     self.all_images.add(self.hot_folder_path + filename)
 
-    def load_image(self):
-
+    def choose_image_to_load_next(self):
         if len(self.new_images_not_yet_displayed) > 0:
-            pil_image = Image.open(self.new_images_not_yet_displayed.pop())
+            return Image.open(self.new_images_not_yet_displayed.pop())
         else:
-            pil_image = Image.open(self.current_run_images.pop())
+            return Image.open(self.current_run_images.pop())
 
-        self.counter_all_displayed_images += 1
-
+    def set_aspect_ratio(self, pil_image):
         img_w, img_h = pil_image.size
-        # resize photo to full screen
         ratio = min(self.canvas_width / img_w, self.canvas_height / img_h)
         img_w = int(img_w*ratio)
         img_h = int(img_h*ratio)
-        pil_image = pil_image.resize((img_w, img_h), Image.ANTIALIAS)
-        image = ImageTk.PhotoImage(pil_image)
-        self.window.canvas.itemconfig(self.image_id, image=image)
+        return pil_image.resize((img_w, img_h), Image.ANTIALIAS)
 
+    def load_image(self):
+
+        self.counter_all_displayed_images += 1
+        pil_image = self.choose_image_to_load_next()
+        image = ImageTk.PhotoImage(self.set_aspect_ratio(pil_image))
+        self.window.canvas.itemconfig(self.image_id, image=image)
         self.window.root.update()
 
     def update_current_run_images(self):
