@@ -48,9 +48,3 @@ while True:
     if time.time() - ts > 3:
         load_image()
         ts = time.time()
-
-    try:
-        pass
-    except _tkinter.TclError:
-        print("Window has been closed.")
-        break
