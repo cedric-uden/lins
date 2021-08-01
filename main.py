@@ -16,6 +16,8 @@ canvas_height = settings.canvas_height
 start_x = settings.start_x
 start_y = settings.start_y
 
+interval_between_images_in_seconds = 5
+
 
 def load_all_image_paths():
     global all_images
@@ -96,7 +98,7 @@ my_obs.start_observer()
 ts = time.time()
 print("Init Complete!")
 while True:
-    if time.time() - ts > 3:
+    if time.time() - ts > interval_between_images_in_seconds:
         if my_obs.has_file_changes():
             new_images = my_obs.get_and_clean_file_changes_set()
             new_images_not_yet_displayed.update(new_images)
