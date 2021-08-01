@@ -1,7 +1,7 @@
 import tkinter as tk
-import Settings
+from Settings import Settings
 
-settings = Settings.Linux
+settings = Settings()
 
 canvas_width = settings.canvas_width
 canvas_height = settings.canvas_height

@@ -2,10 +2,10 @@ import time
 import os
 from PIL import ImageTk, Image
 import FileSystemWatchdog
-import Settings
+from Settings import Settings
 from Window import Window
 
-settings = Settings.Linux
+settings = Settings()
 
 hot_folder_path = settings.path
 image_extension = settings.extension
