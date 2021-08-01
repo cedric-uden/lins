@@ -15,20 +15,27 @@ start_y = 1120
 
 
 def load_all_image_paths():
-    global images
+    global all_images
     for path, dirs, files in os.walk(hot_folder_path):
         for filename in files:
             if filename[-len(image_extension):] == image_extension:
-                images.append(hot_folder_path + filename)
+                all_images.add(hot_folder_path + filename)
 
 
 def load_image():
-    global current_image_number
     global root
+    global new_images_not_yet_displayed
+    global current_run_images
+    global new_images_not_yet_displayed
+    global counter_all_displayed_images
 
-    current_image_number = (current_image_number+1) % len(images)
+    if len(new_images_not_yet_displayed) > 0:
+        pil_image = Image.open(new_images_not_yet_displayed.pop())
+    else:
+        pil_image = Image.open(current_run_images.pop())
 
-    pil_image = Image.open(images[current_image_number])
+    counter_all_displayed_images += 1
+
     img_w, img_h = pil_image.size
     # resize photo to full screen
     ratio = min(canvas_width / img_w, canvas_height / img_h)
@@ -51,26 +58,48 @@ canvas = tk.Canvas(root, width=canvas_width, height=canvas_height)
 canvas.pack()
 canvas.configure(background='black')
 
+
+def update_current_run_images():
+    global all_images
+    global current_run_images
+    global counter_all_displayed_images
+    current_run_images = set()
+    current_run_images.update(all_images)
+    counter_all_displayed_images = 0
+
+
 # images
-images = []
+counter_all_displayed_images = 0
+
+all_images = set()
 load_all_image_paths()
+
+current_run_images = set()
+update_current_run_images()
+
+new_images = set()
+new_images_not_yet_displayed = set()
 
 # create canvas
 image_id = canvas.create_image(canvas_width / 2,
                                canvas_height / 2,
                                anchor='center')
 # and load the first image
-current_image_number = -1
 load_image()
 
-my_observer = FileSystemWatchdog.MyObserver(hot_folder_path)
-my_observer.start_observer()
+my_obs = FileSystemWatchdog.MyObserver(hot_folder_path)
+my_obs.start_observer()
 
 ts = time.time()
 while True:
     if time.time() - ts > 3:
-        if my_observer.has_file_changes():
-            print(my_observer.get_and_clean_file_changes_set())
+        if my_obs.has_file_changes():
+            new_images = my_obs.get_and_clean_file_changes_set()
+            new_images_not_yet_displayed.update(new_images)
+            all_images.update(new_images)
+
+        if counter_all_displayed_images == len(all_images):
+            update_current_run_images()
 
         load_image()
         ts = time.time()
