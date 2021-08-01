@@ -41,7 +41,7 @@ class MyObserver:
 
     def start_observer(self):
         self.my_event_handler.on_created = self.on_created
-        go_recursively = True
+        go_recursively = False
         my_observer = Observer()
         my_observer.schedule(self.my_event_handler, self.path,
                              recursive=go_recursively)
