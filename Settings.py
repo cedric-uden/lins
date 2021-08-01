@@ -10,8 +10,8 @@ class MacOS:
 
 
 class Linux:
-    hot_folder_path = "images/"
-    image_extension = ".jpg"
+    path = "images/"
+    extension = ".jpg"
 
     canvas_width = 2560
     canvas_height = 1400
