@@ -2,6 +2,7 @@ import time
 import os
 import tkinter as tk
 from PIL import ImageTk, Image
+import FileSystemWatchdog
 
 
 hot_folder_path = "images/"
@@ -61,6 +62,8 @@ image_id = canvas.create_image(canvas_width / 2,
 # and load the first image
 current_image_number = -1
 load_image()
+
+FileSystemWatchdog.start_observer(hot_folder_path)
 
 ts = time.time()
 while True:
