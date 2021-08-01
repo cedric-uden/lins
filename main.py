@@ -69,5 +69,8 @@ my_observer.start_observer()
 ts = time.time()
 while True:
     if time.time() - ts > 3:
+        if my_observer.has_file_changes():
+            print(my_observer.get_and_clean_file_changes_set())
+
         load_image()
         ts = time.time()
