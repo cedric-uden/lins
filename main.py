@@ -9,9 +9,17 @@ def load_image():
     global root
 
     current_image_number = (current_image_number+1) % len(images)
-    # change image on canvas
-    current_image = ImageTk.PhotoImage(images[current_image_number])
-    canvas.itemconfig(image_id, image=current_image)
+
+    pil_image = images[current_image_number]
+    img_w, img_h = pil_image.size
+    # resize photo to full screen
+    ratio = min(w/img_w, h/img_h)
+    img_w = int(img_w*ratio)
+    img_h = int(img_h*ratio)
+    pil_image = pil_image.resize((img_w, img_h), Image.ANTIALIAS)
+    image = ImageTk.PhotoImage(pil_image)
+    canvas.itemconfig(image_id, image=image)
+
     root.update()
 
 
