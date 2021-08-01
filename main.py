@@ -1,11 +1,24 @@
 import time
+import os
 import tkinter as tk
 from PIL import ImageTk, Image
+
+
+hot_folder_path = "images/"
+image_extension = ".jpg"
 
 canvas_width = 2560
 canvas_height = 1400
 start_x = 1920
 start_y = 1120
+
+
+def load_all_image_paths():
+    global images
+    for path, dirs, files in os.walk(hot_folder_path):
+        for filename in files:
+            if filename[-len(image_extension):] == image_extension:
+                images.append(hot_folder_path + filename)
 
 
 def load_image():
@@ -14,7 +27,7 @@ def load_image():
 
     current_image_number = (current_image_number+1) % len(images)
 
-    pil_image = images[current_image_number]
+    pil_image = Image.open(images[current_image_number])
     img_w, img_h = pil_image.size
     # resize photo to full screen
     ratio = min(canvas_width / img_w, canvas_height / img_h)
@@ -38,12 +51,8 @@ canvas.pack()
 canvas.configure(background='black')
 
 # images
-images = [
-    Image.open("images/1.jpg"),
-    Image.open("images/2.jpg"),
-    Image.open("images/3.jpg")
-]
-
+images = []
+load_all_image_paths()
 
 # create canvas
 image_id = canvas.create_image(canvas_width / 2,
