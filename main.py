@@ -1,4 +1,3 @@
-import _tkinter
 import time
 import tkinter as tk
 from PIL import ImageTk, Image
