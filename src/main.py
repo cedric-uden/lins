@@ -1,10 +1,9 @@
 import time
 import os
-import tkinter as tk
 from PIL import ImageTk, Image
 import FileSystemWatchdog
 import Settings
-
+from Window import Window
 
 settings = Settings.Linux
 
@@ -18,6 +17,8 @@ start_y = settings.start_y
 
 interval_between_images_in_seconds = 5
 
+window = Window()
+
 
 def load_all_image_paths():
     global all_images
@@ -28,7 +29,7 @@ def load_all_image_paths():
 
 
 def load_image():
-    global root
+    global window
     global new_images_not_yet_displayed
     global current_run_images
     global new_images_not_yet_displayed
@@ -48,20 +49,9 @@ def load_image():
     img_h = int(img_h*ratio)
     pil_image = pil_image.resize((img_w, img_h), Image.ANTIALIAS)
     image = ImageTk.PhotoImage(pil_image)
-    canvas.itemconfig(image_id, image=image)
+    window.canvas.itemconfig(image_id, image=image)
 
-    root.update()
-
-
-# --- main ---
-root = tk.Tk()
-
-root.overrideredirect(1)
-root.geometry(f"%dx%d+{start_x}+{start_y}" % (canvas_width, canvas_height))
-root.focus_set()
-canvas = tk.Canvas(root, width=canvas_width, height=canvas_height)
-canvas.pack()
-canvas.configure(background='black')
+    window.root.update()
 
 
 def update_current_run_images():
@@ -85,10 +75,7 @@ update_current_run_images()
 new_images = set()
 new_images_not_yet_displayed = set()
 
-# create canvas
-image_id = canvas.create_image(canvas_width / 2,
-                               canvas_height / 2,
-                               anchor='center')
+image_id = window.create_canvas_and_get_id()
 # and load the first image
 load_image()
 
