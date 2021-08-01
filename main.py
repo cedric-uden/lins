@@ -63,7 +63,8 @@ image_id = canvas.create_image(canvas_width / 2,
 current_image_number = -1
 load_image()
 
-FileSystemWatchdog.start_observer(hot_folder_path)
+my_observer = FileSystemWatchdog.MyObserver(hot_folder_path)
+my_observer.start_observer()
 
 ts = time.time()
 while True:
