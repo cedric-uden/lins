@@ -16,9 +16,16 @@ def load_image(current_root):
 # --- main ---
 root = tk.Tk()
 
-# canvas for image
-canvas = tk.Canvas(root, width=600, height=600)
+w, h = 2560, 1400
+start_x = 1920
+start_y = 1120
+
+root.overrideredirect(1)
+root.geometry(f"%dx%d+{start_x}+{start_y}" % (w, h))
+root.focus_set()
+canvas = tk.Canvas(root, width=w, height=h)
 canvas.pack()
+canvas.configure(background='black')
 
 # images
 images = [
