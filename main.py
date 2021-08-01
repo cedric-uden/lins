@@ -94,6 +94,7 @@ my_obs = FileSystemWatchdog.MyObserver(hot_folder_path)
 my_obs.start_observer()
 
 ts = time.time()
+print("Init Complete!")
 while True:
     if time.time() - ts > 3:
         if my_obs.has_file_changes():
