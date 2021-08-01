@@ -1,17 +1,18 @@
 import _tkinter
 import time
 import tkinter as tk
-from PIL import ImageTk
+from PIL import ImageTk, Image
 
 
-def load_image(current_root):
+def load_image():
     global current_image_number
+    global root
 
     current_image_number = (current_image_number+1) % len(images)
     # change image on canvas
-    current_image = get_tk_photo_image(current_image_number)
+    current_image = ImageTk.PhotoImage(images[current_image_number])
     canvas.itemconfig(image_id, image=current_image)
-    current_root.update()
+    root.update()
 
 
 # --- main ---
@@ -30,29 +31,26 @@ canvas.configure(background='black')
 
 # images
 images = [
-    ImageTk.PhotoImage(file="images/1.jpg"),
-    ImageTk.PhotoImage(file="images/2.jpg")
+    Image.open("images/1.jpg"),
+    Image.open("images/2.jpg"),
+    Image.open("images/3.jpg")
 ]
-
-
-def get_tk_photo_image(index):
-    return images[index]
 
 
 # create canvas
 image_id = canvas.create_image(0, 0, anchor='nw')
 # and load the first image
 current_image_number = -1
-load_image(root)
+load_image()
 
 ts = time.time()
 while True:
     if time.time() - ts > 3:
-        load_image(root)
+        load_image()
         ts = time.time()
 
     try:
-        root.update()
+        pass
     except _tkinter.TclError:
         print("Window has been closed.")
         break
