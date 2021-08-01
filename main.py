@@ -9,7 +9,8 @@ def load_image(current_root):
 
     current_image_number = (current_image_number+1) % len(images)
     # change image on canvas
-    canvas.itemconfig(image_id, image=images[current_image_number])
+    current_image_local = get_tk_photo_image(current_image_number)
+    canvas.itemconfig(image_id, image=current_image_local)
     current_root.update()
 
 
@@ -34,8 +35,14 @@ images = [
 ]
 current_image_number = 0
 
+
+def get_tk_photo_image(index):
+    return images[index]
+
+
 # set first image on canvas
-image_id = canvas.create_image(0, 0, anchor='nw', image=images[current_image_number])
+current_image = get_tk_photo_image(current_image_number)
+image_id = canvas.create_image(0, 0, anchor='nw', image=current_image)
 
 ts = time.time()
 while True:
