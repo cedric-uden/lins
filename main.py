@@ -6,7 +6,7 @@ import FileSystemWatchdog
 import Settings
 
 
-settings = Settings.MacOS
+settings = Settings.Linux
 
 hot_folder_path = settings.path
 image_extension = settings.extension
