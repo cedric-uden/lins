@@ -46,7 +46,7 @@ images = [
 
 
 # create canvas
-image_id = canvas.create_image(0, 0, anchor='nw')
+image_id = canvas.create_image(w/2, h/2, anchor='center')
 # and load the first image
 current_image_number = -1
 load_image()
