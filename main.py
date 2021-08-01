@@ -3,15 +3,18 @@ import os
 import tkinter as tk
 from PIL import ImageTk, Image
 import FileSystemWatchdog
+import Settings
 
 
-hot_folder_path = "images/"
-image_extension = ".jpg"
+settings = Settings.MacOS
 
-canvas_width = 2560
-canvas_height = 1400
-start_x = 1920
-start_y = 1120
+hot_folder_path = settings.path
+image_extension = settings.extension
+
+canvas_width = settings.canvas_width
+canvas_height = settings.canvas_height
+start_x = settings.start_x
+start_y = settings.start_y
 
 
 def load_all_image_paths():
