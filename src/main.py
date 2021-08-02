@@ -4,13 +4,11 @@ from Settings import Settings
 from ImageHandler import ImageHandler
 
 
-interval_between_images_in_seconds = 5
-
-
 settings = Settings()
 imh = ImageHandler()
 
 hot_folder_path = settings.path
+interval_between_images_in_seconds = settings.interval_between_images_in_seconds
 
 imh.load_all_image_paths()
 imh.update_current_run_images()
