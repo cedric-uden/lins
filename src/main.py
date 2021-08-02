@@ -25,11 +25,16 @@ def load_new_images(observer, image_handler):
     image_handler.all_images.update(new_images)
 
 
+def its_time_to_update(ts):
+    current_interval = time.time() - ts
+    return current_interval > interval_between_images_in_seconds
+
+
 imh.load_image()
-ts = time.time()
+timestamp = time.time()
 print("Init Complete!")
 while True:
-    if time.time() - ts > interval_between_images_in_seconds:
+    if its_time_to_update(timestamp):
         if my_obs.has_file_changes():
             load_new_images(my_obs, imh)
 
@@ -37,4 +42,4 @@ while True:
             imh.update_current_run_images()
 
         imh.load_image()
-        ts = time.time()
+        timestamp = time.time()
