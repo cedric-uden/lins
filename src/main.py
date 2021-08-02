@@ -38,8 +38,7 @@ while True:
         if my_obs.has_file_changes():
             load_new_images(my_obs, imh)
 
-        if imh.counter_all_displayed_images == len(imh.all_images):
-            imh.update_current_run_images()
+        imh.check_if_all_images_have_been_displayed_in_this_run_and_update_new_run_set()
 
         imh.load_image()
         timestamp = time.time()

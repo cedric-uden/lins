@@ -60,4 +60,6 @@ class ImageHandler:
         self.current_run_images.update(self.all_images)
         self.counter_all_displayed_images = 0
 
-
+    def check_if_all_images_have_been_displayed_in_this_run_and_update_new_run_set(self):
+        if self.counter_all_displayed_images == len(self.all_images):
+            self.update_current_run_images()
