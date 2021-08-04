@@ -18,3 +18,9 @@ class ConfiguratorGUI:
             width=(width_percentage / 100) * primary.width,
             height=(height_percentage / 100) * primary.height,
         )
+        target_width = int((width_percentage / 100) * primary.width)
+        target_height = int((height_percentage / 100) * primary.height)
+        start_x = int(((1 - (width_percentage / 100)) / 2) * primary.width)
+        start_y = int(((1 - (height_percentage / 100)) / 2) * primary.height)
+        geometry = f"%dx%d+{start_x}+{start_y}" % (target_width, target_height)
+        self.root.geometry(geometry)
