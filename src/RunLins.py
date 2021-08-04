@@ -15,7 +15,7 @@ class RunLins:
         while True:
             if self.its_time_to_update(timestamp):
                 if self.conf.my_obs.has_file_changes():
-                    self.load_new_images(self.my_obs, self.imh)
+                    self.load_new_images()
 
                 self.conf.imh.check_if_all_images_have_been_displayed_in_this_run_and_update_new_run_set()
                 self.conf.imh.load_image()
