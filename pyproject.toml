@@ -8,6 +8,7 @@ authors = ["Cédric Uden <cedric@uden.de>"]
 python = "^3.9"
 Pillow = "^8.3.1"
 watchdog = "^2.1.3"
+screeninfo = "^0.7"
 
 [tool.poetry.dev-dependencies]
 
