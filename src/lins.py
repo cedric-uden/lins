@@ -1,3 +1,6 @@
 from RunLins import RunLins
+from ConfiguratorGUI import ConfiguratorGUI
 
-RunLins()
+
+ConfiguratorGUI()
+# RunLins()
