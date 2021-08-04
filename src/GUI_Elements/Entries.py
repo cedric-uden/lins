@@ -8,13 +8,14 @@ class MyEntryOptions(enum.Enum):
 
 class MyEntry:
 
-    def __init__(self, root, *args):
+    def __init__(self, root, *args, **kwargs):
         self.root = root
         self.value = None
         self.frame = tk.Frame(self.root)
         self.frame.pack(anchor="nw")
+        self.kwargs = kwargs
 
-        self.title_label = tk.Label(self.frame, text="Hello", anchor='w', width=10)
+        self.title_label = tk.Label(self.frame, text=self.parse_title(), anchor='w', width=18)
         self.title_label.pack(side=tk.LEFT)
 
         self.entry_payload = tk.Entry(self.frame, width=4)
@@ -29,6 +30,13 @@ class MyEntry:
 
         # Create and empty Label to put the result in
         self.output_label.pack(fill=tk.X)
+
+    def parse_title(self):
+        if "title" in self.kwargs:
+            return self.kwargs["title"]
+        else:
+            return "Title missing!"
+
 
     def return_entry(self, arg=None):
         """Gets the result from Entry and return it to the Label"""
