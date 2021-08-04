@@ -6,27 +6,28 @@ from Settings import Settings
 
 class ImageHandler:
 
-    window = Window()
-    settings = Settings()
+    def __init__(self):
+        self.window = Window()
+        self.settings = Settings()
 
-    hot_folder_path = settings.path
-    image_extension = settings.extension
+        self.hot_folder_path = self.settings.path
+        self.image_extension = self.settings.extension
 
-    canvas_width = settings.canvas_width
-    canvas_height = settings.canvas_height
-    start_x = settings.start_x
-    start_y = settings.start_y
+        self.canvas_width = self.settings.canvas_width
+        self.canvas_height = self.settings.canvas_height
+        self.start_x = self.settings.start_x
+        self.start_y = self.settings.start_y
 
-    counter_all_displayed_images = 0
+        self.counter_all_displayed_images = 0
 
-    all_images = set()
+        self.all_images = set()
 
-    current_run_images = set()
+        self.current_run_images = set()
 
-    new_images = set()
-    new_images_not_yet_displayed = set()
+        self.new_images = set()
+        self.new_images_not_yet_displayed = set()
 
-    image_id = window.create_canvas_and_get_id()
+        self.image_id = self.window.create_canvas_and_get_id()
 
     def load_all_image_paths(self):
         for path, dirs, files in os.walk(self.hot_folder_path):
