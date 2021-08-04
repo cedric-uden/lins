@@ -11,16 +11,21 @@ class MyEntry:
     def __init__(self, root, *args):
         self.root = root
         self.value = None
-        self.entry_payload = tk.Entry(self.root, width=4)
-        self.title_label = tk.Label(self.root, text="Hello")
-        self.output_label = tk.Label(self.root, text="")
-        self.title_label.pack(fill=tk.X)
+        self.frame = tk.Frame(self.root)
+        self.frame.pack(anchor="nw")
 
-        # Create the Entry widget
-        if MyEntryOptions.focus in args:
+        self.title_label = tk.Label(self.frame, text="Hello", anchor='w', width=10)
+        self.title_label.pack(side=tk.LEFT)
+
+        self.entry_payload = tk.Entry(self.frame, width=4)
+        self.entry_payload.pack(side=tk.LEFT, padx=5)
+
+        self.output_label = tk.Label(self.frame, text="")
+        self.output_label.pack(side=tk.LEFT, padx=5)
+
+        if MyEntryOptions.focus in args:  # focus the window with tab
             self.entry_payload.focus()
-        self.entry_payload.bind("<Return>", self.return_entry)
-        self.entry_payload.pack()
+        self.entry_payload.bind("<Return>", self.return_entry)  # bind the return / enter key to action
 
         # Create and empty Label to put the result in
         self.output_label.pack(fill=tk.X)
