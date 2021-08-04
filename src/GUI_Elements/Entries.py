@@ -1,19 +1,13 @@
 import tkinter as tk
-import enum
-
-
-class MyEntryOptions(enum.Enum):
-    focus = "focus"
 
 
 class MyEntry:
 
-    def __init__(self, root, *args, **kwargs):
+    def __init__(self, root, **kwargs):
         self.root = root
         self.value = None
         self.frame = tk.Frame(self.root)
         self.frame.pack(anchor="nw")
-        self.args = args
         self.kwargs = kwargs
 
         self.title_label = tk.Label(self.frame, text=self.parse_title(), anchor='w', width=18)
@@ -30,8 +24,9 @@ class MyEntry:
     def create_and_get_entry_field(self):
         entry = tk.Entry(self.frame, width=4)
         entry.pack(side=tk.LEFT, padx=5)
-        if MyEntryOptions.focus in self.args:  # focus the window with tab
-            entry.focus()
+        if "focus" in self.kwargs:
+            if self.kwargs["focus"]:
+                entry.focus()
         entry.bind("<Return>", self.return_entry)  # bind the return / enter key to action
         return entry
 

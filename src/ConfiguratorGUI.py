@@ -1,6 +1,6 @@
 import ScreenInfo
 import tkinter as tk
-from GUI_Elements.Entries import MyEntry, MyEntryOptions
+from GUI_Elements.Entries import MyEntry
 
 
 class ConfiguratorGUI:
@@ -8,7 +8,7 @@ class ConfiguratorGUI:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Configurator")
-        self.enter_timer = MyEntry(self.root, MyEntryOptions.focus, title="Enter Timer")
+        self.enter_timer = MyEntry(self.root, focus=True, title="Enter Timer")
         self.enter_path = MyEntry(self.root, title="Enter the path")
         self.configure_root_window_dimensions()
         self.root.mainloop()
