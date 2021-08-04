@@ -13,30 +13,33 @@ class MyEntry:
         self.value = None
         self.frame = tk.Frame(self.root)
         self.frame.pack(anchor="nw")
+        self.args = args
         self.kwargs = kwargs
 
         self.title_label = tk.Label(self.frame, text=self.parse_title(), anchor='w', width=18)
         self.title_label.pack(side=tk.LEFT)
 
-        self.entry_payload = tk.Entry(self.frame, width=4)
-        self.entry_payload.pack(side=tk.LEFT, padx=5)
+        self.entry_payload = self.create_and_get_entry_field()
 
         self.output_label = tk.Label(self.frame, text="")
         self.output_label.pack(side=tk.LEFT, padx=5)
 
-        if MyEntryOptions.focus in args:  # focus the window with tab
-            self.entry_payload.focus()
-        self.entry_payload.bind("<Return>", self.return_entry)  # bind the return / enter key to action
-
         # Create and empty Label to put the result in
         self.output_label.pack(fill=tk.X)
+
+    def create_and_get_entry_field(self):
+        entry = tk.Entry(self.frame, width=4)
+        entry.pack(side=tk.LEFT, padx=5)
+        if MyEntryOptions.focus in self.args:  # focus the window with tab
+            entry.focus()
+        entry.bind("<Return>", self.return_entry)  # bind the return / enter key to action
+        return entry
 
     def parse_title(self):
         if "title" in self.kwargs:
             return self.kwargs["title"]
         else:
             return "Title missing!"
-
 
     def return_entry(self, arg=None):
         """Gets the result from Entry and return it to the Label"""
