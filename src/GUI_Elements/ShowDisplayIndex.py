@@ -6,13 +6,20 @@ class ShowDisplayIndex:
 
     def __init__(self):
         self.screens = ScreenInfo.ScreenInfo()
-        self.all_tk_roots = []
-        self.all_tk_root_frames = []
         self.bg_color = "#000"
         self.text_color = "#FFF"
 
-        self.current_screen_index = 0
+        self.all_tk_roots = None
+        self.all_tk_root_frames = None
+        self.current_screen_index = None
+        self.init_lists_and_index()
+
         self.for_all_screens()
+
+    def init_lists_and_index(self):
+        self.current_screen_index = 0
+        self.all_tk_roots = []
+        self.all_tk_root_frames = []
 
     def for_all_screens(self):
         for _ in self.screens.all_monitors:
@@ -42,3 +49,7 @@ class ShowDisplayIndex:
                                )
         index_label.pack()
 
+    def destruct_windows(self):
+        for index in range(len(self.all_tk_roots)):
+            self.all_tk_roots[index].destroy()
+        self.init_lists_and_index()
