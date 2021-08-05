@@ -1,13 +1,15 @@
 from tkinter.filedialog import askdirectory
 import tkinter as tk
+from src import Settings
 
 
 class AskPath:
 
     def __init__(self, root):
         self.root = root
+        self.settings = Settings.Settings()
 
-        self.last_valid_path = "/Foo/Bar"
+        self.last_valid_path = self.settings.path
         self.get_path = self.last_valid_path
         self.frame_label = None
         self.frame_button = None
