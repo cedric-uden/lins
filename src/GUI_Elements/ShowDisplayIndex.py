@@ -14,14 +14,12 @@ class ShowDisplayIndex:
         self.current_screen_index = None
         self.init_lists_and_index()
 
-        self.for_all_screens()
-
     def init_lists_and_index(self):
         self.current_screen_index = 0
         self.all_tk_roots = []
         self.all_tk_root_frames = []
 
-    def for_all_screens(self):
+    def build(self):
         for _ in self.screens.all_monitors:
             self.all_tk_roots.append(tk.Tk())
             current_root = self.all_tk_roots[self.current_screen_index]

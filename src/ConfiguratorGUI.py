@@ -2,6 +2,7 @@ import ScreenInfo
 import tkinter as tk
 from GUI_Elements.Entries import MyEntry
 from GUI_Elements.AskPath import AskPath
+from GUI_Elements.ShowDisplayIndexButton import ShowDisplayIndexButton
 
 
 class ConfiguratorGUI:
@@ -12,6 +13,7 @@ class ConfiguratorGUI:
         self.enter_timer = MyEntry(self.root, focus=True, title="Enter Timer")
         self.enter_path = MyEntry(self.root, title="Enter the path")
         self.ask_path = AskPath(self.root)
+        self.show_display_index = ShowDisplayIndexButton(self.root)
         self.configure_root_window_dimensions()
         self.root.mainloop()
 
