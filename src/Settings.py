@@ -30,10 +30,10 @@ class Settings:
     def mac_os(self):
         self.path = "/Users/ced/Pictures/"
         self.extension = ".JPG"
-        self.canvas_width = 1926
-        self.canvas_height = 1086
-        self.start_x = 1437
-        self.start_y = -3
+        self.canvas_width = 1280 + 6
+        self.canvas_height = 720 + 6
+        self.start_x = 1440 - 3
+        self.start_y = 0 - 3
         self.interval_between_images_in_seconds = 5
 
     def linux(self):
