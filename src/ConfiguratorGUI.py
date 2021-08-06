@@ -3,6 +3,7 @@ import tkinter as tk
 from GUI_Elements.Entries import MyEntry
 from GUI_Elements.AskPath import AskPath
 from GUI_Elements.ShowDisplayIndexButton import ShowDisplayIndexButton
+from GUI_Elements.LaunchSlideshowButton import LaunchSlideshowButton
 
 
 class ConfiguratorGUI:
@@ -14,6 +15,7 @@ class ConfiguratorGUI:
         self.enter_path = MyEntry(self.root, title="Enter the path")
         self.ask_path = AskPath(self.root)
         self.show_display_index = ShowDisplayIndexButton(self.root)
+        self.run_slideshow = LaunchSlideshowButton(self.root)
         self.configure_root_window_dimensions()
         self.root.mainloop()
 
