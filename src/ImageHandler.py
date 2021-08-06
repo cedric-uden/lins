@@ -18,8 +18,6 @@ class ImageHandler:
         self.start_x = self.settings.start_x
         self.start_y = self.settings.start_y
 
-        self.counter_all_displayed_images = 0
-
         self.all_images = set()
 
         self.current_run_images = set()
@@ -50,7 +48,6 @@ class ImageHandler:
 
     def load_image(self):
 
-        self.counter_all_displayed_images += 1
         pil_image = self.choose_image_to_load_next()
         image = ImageTk.PhotoImage(self.set_aspect_ratio(pil_image))
         self.window.canvas.itemconfig(self.image_id, image=image)
@@ -59,8 +56,7 @@ class ImageHandler:
     def update_current_run_images(self):
         self.current_run_images = set()
         self.current_run_images.update(self.all_images)
-        self.counter_all_displayed_images = 0
 
     def check_if_all_images_have_been_displayed_in_this_run_and_update_new_run_set(self):
-        if self.counter_all_displayed_images == len(self.all_images):
+        if self.current_run_images == set():
             self.update_current_run_images()
