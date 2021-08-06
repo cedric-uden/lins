@@ -2,6 +2,9 @@ from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 
 
+# source: http://thepythoncorner.com/dev/how-to-create-a-watchdog-in-python-to-look-for-filesystem-changes/
+
+
 def get_empty_set():
     return set()
 
@@ -21,6 +24,7 @@ class MyObserver:
                                         self.case_sensitive)
         self.path = path
         self.new_files = get_empty_set()
+        self.deleted_files = get_empty_set()
 
     def has_file_changes(self):
         if len(self.new_files) > 0:
@@ -31,6 +35,9 @@ class MyObserver:
     def on_created(self, event):
         self.new_files.add(event.src_path)
 
+    def on_deleted(self, event):
+        self.deleted_files.add(event.src_path)
+
     def clean_file_changes_set(self):
         self.new_files = get_empty_set()
 
@@ -39,8 +46,15 @@ class MyObserver:
         self.clean_file_changes_set()
         return return_set
 
+    def has_found_deleted_files(self):
+        return not len(self.deleted_files) == 0
+
+    def clean_deleted_set(self):
+        self.deleted_files = get_empty_set()
+
     def start_observer(self):
         self.my_event_handler.on_created = self.on_created
+        self.my_event_handler.on_deleted = self.on_deleted
         go_recursively = False
         my_observer = Observer()
         my_observer.schedule(self.my_event_handler, self.path,

@@ -33,6 +33,12 @@ class ImageHandler:
                 if filename[-len(self.image_extension):] == self.image_extension:
                     self.all_images.add(self.hot_folder_path + filename)
 
+    def clean_set_from_deleted_items(self, deleted_items_set):
+        self.all_images.difference_update(deleted_items_set)
+        self.current_run_images.difference_update(deleted_items_set)
+        self.new_images.difference_update(deleted_items_set)
+        self.new_images_not_yet_displayed.difference_update(deleted_items_set)
+
     def choose_image_to_load_next(self):
         if len(self.new_images_not_yet_displayed) > 0:
             return Image.open(self.new_images_not_yet_displayed.pop())

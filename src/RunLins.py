@@ -14,12 +14,20 @@ class RunLins:
         print("Init Complete!")
         while True:
             if self.its_time_to_update(timestamp):
+                if self.conf.my_obs.has_found_deleted_files():
+                    self.if_files_got_deleted()
+
                 if self.conf.my_obs.has_file_changes():
                     self.load_new_images()
 
                 self.conf.imh.check_if_all_images_have_been_displayed_in_this_run_and_update_new_run_set()
                 self.conf.imh.load_image()
                 timestamp = time.time()
+
+    def if_files_got_deleted(self):
+        deleted_items = self.conf.my_obs.deleted_files
+        self.conf.imh.clean_set_from_deleted_items(deleted_items)
+        self.conf.my_obs.clean_deleted_set()
 
     def load_new_images(self):
         new_images = self.conf.my_obs.get_and_clean_file_changes_set()
