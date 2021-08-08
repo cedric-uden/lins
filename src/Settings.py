@@ -34,7 +34,7 @@ class Settings:
         self.canvas_height = 720 + 6
         self.start_x = 1440 - 3
         self.start_y = 0 - 3
-        self.interval_between_images_in_seconds = 5
+        self.interval_between_images_in_seconds = 15
 
     def linux(self):
         self.path = "images/"
