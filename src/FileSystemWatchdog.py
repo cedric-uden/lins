@@ -1,5 +1,6 @@
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
+from Settings import Settings
 
 
 # source: http://thepythoncorner.com/dev/how-to-create-a-watchdog-in-python-to-look-for-filesystem-changes/
@@ -11,7 +12,8 @@ def get_empty_set():
 
 class MyObserver:
 
-    patterns = ["*"]
+    settings = Settings()
+    patterns = [settings.extension]
     ignore_patterns = None
     ignore_directories = False
     case_sensitive = True
